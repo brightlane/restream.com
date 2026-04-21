@@ -1,17 +1,19 @@
-# .github/workflows/deploy.yaml
-name: Deploy to Vercel after AI Pipeline
+# .github/workflows/daily-ai-orchestrator.yml
+name: Daily AI Orchestration
 
 on:
-  # Run after the daily‑ai‑orchestrator completes successfully
-  workflow_run:
-    workflows: ["Daily AI Orchestration"]
-    types:
-      - completed
+  # Auto-run every day at 3 AM UTC
+  schedule:
+    - cron: '0 3 * * *'
+
+  # Enable the "Run workflow" button in GitHub Actions UI
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  run-orchestrator:
+    name: Run 10‑AI‑team‑brain orchestrator
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.conclusion == 'success'
+    timeout-minutes: 60
 
     steps:
       - name: Checkout code
@@ -26,21 +28,18 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Example: run a final build step if your site needs one
-      # - name: Build static output
-      #   run: npm run build
-
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
-          working-directory: .  # or your site’s folder
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Notify on success
+      - name: Run main orchestrator (30–50 articles)
         run: |
-          echo "🚀 Deploy to Vercel completed at $(date -u)"
+          node orchestrator.js
+
+      - name: Run repair orchestrator (auto‑fix pages)
+        run: |
+          node repair-orchestrator.js
+
+      - name: Commit and push generated output (pages, sitemap, robots, DB, etc.)
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git diff --cached --exit-code || git commit -m "Auto‑generated AI‑content run: $(date)"
+          git push
