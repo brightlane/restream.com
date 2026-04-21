@@ -1,120 +1,45 @@
-// agent-8-technical-seo.js
-// Agent 8 – Technical SEO: auto‑build Title, Meta, URL, Internal Links, Schema
+// Inside agent-8-technical-seo.js (add this to your existing file)
 
-const { logObservation } = require('../lib/db-utils');
+/**
+ * Build hreflang tags for all language variants of a page
+ */
+const buildHreflangTags = (strategy, allLangs) => {
+  const { slug, lang: currentLang } = strategy;
 
-// 1. Title tag builder (50–60 chars)
-const buildTitleTag = (title, primaryKeyword) => {
-  const maxChars = 60;
-  let tag = title;
+  const tags = allLangs.map(lang => {
+    const href = `/${lang.code}/restream/${slug}`;
 
-  // If primaryKeyword is not in title, try to add it
-  if (!tag.toLowerCase().includes(primaryKeyword.toLowerCase())) {
-    tag = `${primaryKeyword} | ${tag}`;
+    return `<link rel="alternate" hreflang="${lang.code}" href="https://yourdomain.com${href}" />`;
+  });
+
+  // Add x-default if English is default
+  const enLang = allLangs.find(l => l.code === 'en');
+  if (enLang) {
+    const enHref = `/${enLang.code}/restream/${slug}`;
+    tags.push(
+      `<link rel="alternate" hreflang="x-default" href="https://yourdomain.com${enHref}" />`
+    );
   }
 
-  return tag.slice(0, maxChars).trim();
+  return tags.join('\n');
 };
 
-// 2. Meta description builder (140–160 chars)
-const buildMetaDescription = (primaryKeyword, secondaryKeywords) => {
-  const maxChars = 160;
-  const kws = [primaryKeyword, ...(secondaryKeywords || [])]
-    .map(k => (typeof k === 'string' ? k : k.name || ''))
-    .join(', ')
-    .slice(0, maxChars - 20);
+/**
+ * Build <html lang="..."> and <head> with hreflang
+ */
+const buildHeadWithHreflang = (strategy, allLangs) => {
+  const { lang = 'en', title, metaDescription } = strategy;
 
-  return `Learn how to use Restream for ${kws} and stream across multiple platforms from one dashboard. Try Restream free for 7 days.`.slice(
-    0,
-    maxChars
-  );
+  const titleSafe = title.slice(0, 60).trim();
+  const metaDesc = metaDescription.slice(0, 160).trim();
+
+  const hreflangTags = buildHreflangTags(strategy, allLangs);
+
+  return `<head>
+  <meta charset="utf-8">
+  <title>${titleSafe}</title>
+  <meta name="description" content="${metaDesc}">
+  <link rel="canonical" href="https://yourdomain.com${strategy.url}" />
+  ${hreflangTags}
+</head>`;
 };
-
-// 3. Friendly URL builder
-const buildFriendlyUrl = (slug, lang = 'en') => {
-  // Normalize and slugify
-  const safeSlug = slug
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-
-  // E.g. `/en/restream/how-to-go-live-on-multiple-platforms`
-  return `/${lang}/restream/${safeSlug}`;
-};
-
-// 4. Internal links block (3–8 internal links)
-const buildInternalLinks = (strategy, pageLang = 'en') => {
-  const clusterPages = strategy.clusterPages || [];
-
-  const links = clusterPages
-    .slice(0, 8)
-    .map(p => ({
-      text: p.title,
-      href: p.url.startsWith('/') ? p.url : `/${pageLang}/restream/${p.slug}`
-    }));
-
-  if (links.length === 0) {
-    return '';
-  }
-
-  const listItems = links
-    .map(
-      link =>
-        `<li><a href="${link.href}" rel="nofollow">${link.text}</a></li>`
-    )
-    .join('\n');
-
-  return `<aside class="related-links">
-  <h2>Related</h2>
-  <ul>
-    ${listItems}
-  </ul>
-</aside>`;
-};
-
-// 5. Schema markup (Article or HowTo)
-const buildSchemaMarkup = (strategy, body, pageLang = 'en') => {
-  const itemType =
-    strategy.howToSteps || strategy.pageType === 'howto' ? 'HowTo' : 'Article';
-
-  const base = {
-    '@context': 'https://schema.org',
-    '@type': itemType,
-    headline: strategy.title,
-    description: strategy.metaDescription || '',
-    url: `https://yourdomain.com${strategy.url}`,
-    author: {
-      '@type': 'Organization',
-      name: 'Your Site'
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Your Site',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://yourdomain.com/logo.png'
-      }
-    },
-    datePublished: strategy.publishedAt,
-    dateModified: new Date().toISOString(),
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `https://yourdomain.com${strategy.url}`
-    }
-  };
-
-  if (itemType === 'HowTo' && strategy.howToSteps) {
-    base.step = strategy.howToSteps.map(step => ({
-      '@type': 'HowToStep',
-      text: step.text.replace(/"/g, '\\"'),
-      name: step.title.replace(/"/g, '\\"')
-    }));
-    base.name = strategy.title;
-  }
-
-  return `<script type="application/ld+json">
-${JSON.stringify(base, null, 2)}
-</script>`;
-};
-
-// 6. Build full SEO page (title tag, meta, URL, body, internal links, schema)
