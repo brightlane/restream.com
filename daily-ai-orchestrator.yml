@@ -1,0 +1,55 @@
+# .github/workflows/daily-ai-orchestrator.yml
+name: Daily AI Orchestration + Deploy
+
+on:
+  schedule:
+    - cron: '0 3 * * *'   # 3 AM UTC
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    name: Run 10‑AI‑team‑brain and deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run orchestrator
+        run: |
+          node orchestrator.js
+
+      - name: Run repair orchestrator
+        run: |
+          node repair-orchestrator.js
+
+      - name: Generate sitemap
+        run: |
+          node -e "require('./lib/sitemap-generator').generateSitemap()"
+
+      - name: Generate robots.txt
+        run: |
+          node -e "require('./lib/robots-generator').generateRobotsTxt()"
+
+      # ========== DEPLOY SECTION ==========
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: public          # your output folder (sitemap.xml, robots.txt, pages)
+          branch: gh-pages        # target branch for GitHub Pages
+          clean: true             # keep it tidy
+
+      - name: Notify on success
+        run: |
+          echo "✅ 10‑AI‑team‑brain + deploy completed at $(date -u)"
