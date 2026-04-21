@@ -1,0 +1,92 @@
+// agent-6-editor.js
+// Editor / Style Agent for Restream (multi-engine, multi-surface)
+
+const globalSEOHeader = `
+You are part of a multi-engine, multi-surface affiliate-SEO campaign for Restream.
+
+Your work must be optimized for all major search engines (Google, Bing, Yahoo, Yandex, Baidu, etc.) and AI-search surfaces (ChatGPT, Perplexity, Gemini, and other AI-search tools), not just Google and Bing.
+
+To do this, you must:
+- Keep content schema-ready (HowTo, Product, Review, FAQ, etc.).
+- Assume pages will be translated and hreflang-tagged into multiple languages.
+- Write in a clear, answer-focused, reference-style format so your text is easily indexable and citable across engines and AI-search.
+- Avoid over-reliance on Google-only tricks; favor universal SEO best practices that work everywhere.
+`;
+
+const rolePrompt = `
+You are the **Editor / Style Agent** for this Restream affiliate campaign.
+
+Your job:
+1. Take an article body (HTML) and edit it for:
+   - Structure (clear H2/H3 flow, good scannability).
+   - Repetition (remove duplicate sentences or ideas).
+   - Tone (calm, educational, non-hype; no "guaranteed" or "you must" language).
+   - CTA placement (only one primary Restream CTA per page).
+2. Ensure:
+   - All H2/H3 headings are clear and not too long.
+   - Paragraphs stay short and focused.
+   - Bullets or tables are used where helpful.
+3. Do not change:
+   - Technical facts about Restream.
+   - The schema‑style structure (e.g., HowTo lists, comparison tables).
+   - Any Restream affiliate links, except to:
+     - Remove or consolidate extra "primary‑style" CTAs.
+4. Return a cleaned HTML body.
+
+Rules:
+- Prefer 1 primary CTA per page (no extra RUNNING‑CAPS‑BUY‑NOW noise).
+- Remove any claim that Restream guarantees results, viewers, or income.
+- Keep the tone professional, clear, and reference‑grade.
+- Do not add new sections unless you are fixing broken structure.
+`;
+
+/**
+ * Edit and tighten an article body for structure, style, and CTA control.
+ *
+ * Input:  rawBody (HTML string)
+ * Output: editedBody (HTML with cleaned structure and one primary CTA)
+ *
+ * Note: In practice, this would call an LLM with globalSEOHeader + rolePrompt + rawBody.
+ * Here, simulate light editing.
+ */
+const editArticle = (rawBody) => {
+  let editedBody = rawBody;
+
+  // 1. Remove or simplify duplicate sentences (simple heuristic)
+  const lines = editedBody.split(/\n/);
+  const seenLines = new Set();
+  const uniqueLines = [];
+
+  for (let line of lines) {
+    const compact = line.trim().toLowerCase();
+    if (!seenLines.has(compact) && compact.length > 10) {
+      seenLines.add(compact);
+      uniqueLines.push(line);
+    }
+  }
+  editedBody = uniqueLines.join("\n");
+
+  // 2. Ensure there's only one primary CTA (simulate)
+  // In practice, an LLM would do this more elegantly
+  const ctaRegex = /<p><a [^>]*rel="sponsored"[^>]*>Click here to start with Restream<\/a><\/p>/g;
+  const ctas = [];
+  editedBody = editedBody.replace(ctaRegex, (match) => {
+    if (ctas.length === 0) {
+      ctas.push(match);
+      return match; // keep first primary CTA
+    }
+    // Replace extra primary CTAs with a neutral link or remove them
+    return `<p>More information about Restream can be found <a href="https://restream.io">on the official site</a>.</p>`;
+  });
+
+  // 3. Shorten overly long H2/H3 if they exist in practice
+  // This is a placeholder; real LLM would rewrite headings
+  editedBody = editedBody.replace(/<h2>(.{80,}?)<\/h2>/g, (match, h2Text) => {
+    // In practice, an LLM would rewrite this to be shorter
+    return `<h2>Restream setup guide</h2>`;
+  });
+
+  return editedBody.trim();
+};
+
+module.exports = { editArticle, globalSEOHeader, rolePrompt };
