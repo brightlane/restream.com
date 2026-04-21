@@ -1,0 +1,35 @@
+{
+  "source": "restream-affiliate-config",
+  "version": "1.0",
+  "created_at": "2026-04-21T12:00:00Z",
+  "campaigns": [
+    {
+      "id": "restream-studio",
+      "name": "Restream Studio Style",
+      "type": "studio",
+      "url": "https://try.restream.io/studio-PalmariniServices",
+      "max_links_per_page": 1,
+      "description": "Link for Restream Studio‑style streaming setup (studio branding, overlays, professional look).",
+      "intent_examples": [
+        "studio streaming setup",
+        "professional stream branding",
+        "studio overlays",
+        "high‑end streaming setup"
+      ]
+    },
+    {
+      "id": "restream-multi",
+      "name": "Restream Multi‑Platform",
+      "type": "multi",
+      "url": "https://try.restream.io/rwapmhjhzv2z",
+      "max_links_per_page": 1,
+      "description": "Link for multi‑platform streaming (Twitch + YouTube + TikTok style, broad reach).",
+      "intent_examples": [
+        "multistream to Twitch and YouTube",
+        "stream to 8 platforms at once",
+        "multi‑platform broadcasting",
+        "someone who wants to reach as many platforms as possible"
+      ]
+    }
+  ]
+}
