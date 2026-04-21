@@ -18,7 +18,7 @@ const { buildFullPrompt } = require('./lib/agents-prompt-builder');
 // 3. Restream affiliate validator
 const { validateAffiliateLinks } = require('./lib/affiliates-validator');
 
-// 4. Agent imports (same 10 as your main orchestrator)
+// 4. Agent imports (from agents/ folder)
 const {
   generateOutline,
   generateArticle,
@@ -28,7 +28,7 @@ const {
   createSEOPage,
   trackPerformance,
   auditPolicy
-} = require('./agent-3-outline');          // mock import; adjust to your actual agent paths
+} = require('./agents/agent-3-outline'); // stub import; actual agents are in agents/*.js
 const agentDir = path.join(__dirname, 'agents');
 
 // 5. Audit and repair a single article
