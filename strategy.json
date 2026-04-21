@@ -1,0 +1,32 @@
+{
+  "version": "1.0",
+  "created_at": "2026-04-21T11:40:00Z",
+  "focus_clusters": [
+    "restream-studio",
+    "restream-multi"
+  ],
+  "priority_engines": ["Google", "Bing", "AI-search"],
+  "priority_languages": ["en", "es", "fr", "de"],
+  "policy_rules": {
+    "max_primary_cta_per_page": 1,
+    "always_affiliate_disclosure": true,
+    "no_guaranteed_claims": true,
+    "schema_types_to_use": ["HowTo", "Product", "FAQ", "Review"]
+  },
+  "feeders_to_prioritize": [
+    "product_cluster",
+    "comparison",
+    "use_case",
+    "question",
+    "language_page",
+    "hreflang"
+  ],
+  "ranking_target": "aim_for_#1",
+  "auto_rewrite_triggers": [
+    "ranking_drop",
+    "low_ctr",
+    "low_time_on_page",
+    "overclaim",
+    "missing_disclosure"
+  ]
+}
