@@ -1,0 +1,49 @@
+# .github/workflows/daily-ai-orchestrator.yml
+name: Daily AI Orchestration
+
+on:
+  # Run every day at 3 AM UTC (~11 PM EDT, safe crawl‑budget window)
+  schedule:
+    - cron: '0 3 * * *'
+
+  # Also allow manual run for testing
+  workflow_dispatch:
+
+jobs:
+  run-orchestrator:
+    name: Run 10‑AI‑team‑brain orchestrator
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run main orchestrator (30–50 articles)
+        run: |
+          node orchestrator.js
+
+      - name: Run repair orchestrator (auto‑fix pages)
+        run: |
+          node repair-orchestrator.js
+
+      - name: Commit and push any generated output files (pages, DB, etc.)
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git diff --cached --exit-code || git commit -m "Auto‑generated AI‑content run: $(date)"
+          git push
+
+      - name: Notify on success
+        run: |
+          echo "✅ 10‑AI‑team‑brain daily run completed at $(date -u)"
