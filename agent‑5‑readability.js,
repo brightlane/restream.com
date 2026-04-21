@@ -1,0 +1,87 @@
+// agent-5-readability.js
+// Readability / Tone Agent for Restream (multi-engine, multi-surface)
+
+const globalSEOHeader = `
+You are part of a multi-engine, multi-surface affiliate-SEO campaign for Restream.
+
+Your work must be optimized for all major search engines (Google, Bing, Yahoo, Yandex, Baidu, etc.) and AI-search surfaces (ChatGPT, Perplexity, Gemini, and other AI-search tools), not just Google and Bing.
+
+To do this, you must:
+- Keep content schema-ready (HowTo, Product, Review, FAQ, etc.).
+- Assume pages will be translated and hreflang-tagged into multiple languages.
+- Write in a clear, answer-focused, reference-style format so your text is easily indexable and citable across engines and AI-search.
+- Avoid over-reliance on Google-only tricks; favor universal SEO best practices that work everywhere.
+`;
+
+const rolePrompt = `
+You are the **Readability / Tone Agent** for this Restream affiliate campaign.
+
+Your job:
+1. Take an article (HTML body or plain text) and improve its readability and tone.
+2. Focus on:
+   - Shortening long sentences.
+   - Removing fluff, repetition, and redundant phrases.
+   - Making the text more scannable (use short paragraphs, bullets where helpful).
+   - Keeping the tone non-bloggy and reference-style.
+3. Do not invent new information or change technical facts.
+4. Keep all Restream affiliate links and schema‑style structure intact.
+5. Return a cleaned version of the article body (without <html> tags).
+
+Rules:
+- Prefer short, clear sentences over complex ones.
+- Remove “wow‑wow‑wow” style language and marketing hype.
+- Keep the tone calm, educational, and guide‑like.
+- Do not change H1/H2/H3 headings (only text inside them).
+- Do not add or remove any Restream CTAs or links.
+`;
+
+/**
+ * Improve readability and tone of an article body.
+ *
+ * Input:  rawBody (HTML string or plain text)
+ * Output: cleanedBody (HTML or text with improved readability)
+ *
+ * Note: This is a *simulation* of a readability pass.
+ * In practice, you’d call an LLM with globalSEOHeader + rolePrompt + rawBody.
+ */
+const improveReadability = (rawBody) => {
+  // In reality, this would call your LLM:
+  //   systemPrompt: globalSEOHeader + rolePrompt
+  //   userPrompt: rawBody
+  // For now, simulate light readability tweaks:
+
+  let cleanedBody = rawBody;
+
+  // 1. Shorten common fluff phrases (you can expand this list)
+  const replacements = [
+    ["This section explains how", "This section explains"],
+    ["This step explains how", "This step explains"],
+    ["In this section, we explain", "This section explains"],
+    ["Restream provides a powerful solution for", "Restream provides a solution for"],
+    ["for your streaming setup", "for your stream"]
+  ];
+
+  replacements.forEach(([from, to]) => {
+    const regex = new RegExp(from, "gi");
+    cleanedBody = cleanedBody.replace(regex, to);
+  });
+
+  // 2. Ensure paragraphs aren’t too long
+  // (in practice, an LLM would do this better)
+  if (cleanedBody.includes("<p>")) {
+    cleanedBody = cleanedBody.replace(
+      /(<p>[^<]{200,}?)\.\s/g,
+      (match, p1) => {
+        const breakpoint = p1.lastIndexOf(" ");
+        if (breakpoint > 0) {
+          return p1.slice(0, breakpoint) + `.` + p1.slice(breakpoint) + `</p><p>`;
+        }
+        return match;
+      }
+    );
+  }
+
+  return cleanedBody.trim();
+};
+
+module.exports = { improveReadability, globalSEOHeader, rolePrompt };
