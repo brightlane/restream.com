@@ -8,14 +8,10 @@
     "start": "node orchestrator.js",
     "blog": "node generate-blog.js",
     "sitemap": "node generate-sitemap.js",
+    "social": "node social-poster.js",
+    "schedule": "node scheduler.js",
     "repair": "node repair-orchestrator.js",
-    "build": "node generate-blog.js && node generate-sitemap.js"
+    "build": "node generate-blog.js && node generate-sitemap.js && node social-poster.js"
   },
   "dependencies": {}
-}
-package.json s
-{
-  "scripts": {
-    "schedule": "node scheduler.js"
-  }
 }
