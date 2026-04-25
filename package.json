@@ -1,10 +1,15 @@
 {
   "name": "restream-ai-orchestrator",
   "version": "1.0.0",
+  "description": "Automated affiliate blog generation system with SEO, internal linking, and Restream affiliate monetization",
   "main": "orchestrator.js",
+  "type": "commonjs",
   "scripts": {
     "start": "node orchestrator.js",
-    "repair": "node repair-orchestrator.js"
+    "blog": "node generate-blog.js",
+    "sitemap": "node generate-sitemap.js",
+    "repair": "node repair-orchestrator.js",
+    "build": "node generate-blog.js && node generate-sitemap.js"
   },
   "dependencies": {}
 }
