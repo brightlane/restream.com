@@ -1,4 +1,24 @@
+# robots.txt — Restream Affiliate Landing Page
+
 User-agent: *
 Allow: /
 
-Sitemap: https://brightlane.github.io/restream.com/sitemap.xml
+# Allow full indexing of main landing page
+Allow: /rwapmhjhzv2z
+Allow: /studio-PalmariniServices
+
+# Block sensitive or non-SEO assets (optional safety)
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+Disallow: /logs/
+Disallow: /.git/
+Disallow: /node_modules/
+
+# Prevent crawling of duplicate or low-value technical files
+Disallow: *.json$
+Disallow: *.log$
+Disallow: *.txt~
+
+# Sitemap (important for SEO)
+Sitemap: https://try.restream.io/sitemap.xml
