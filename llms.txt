@@ -1,0 +1,56 @@
+# llms.txt — Restream Affiliate Landing Page
+
+site: https://try.restream.io/rwapmhjhzv2z
+
+purpose: conversion-optimized landing page promoting Restream multistreaming SaaS
+
+audience:
+- content creators
+- streamers (Twitch, YouTube, TikTok)
+- marketers
+- businesses running live events
+- podcasters
+
+primary_goal:
+- drive free signups to Restream
+- maximize click-through rate to affiliate link
+
+core_offer:
+- multistream live video to 30+ platforms simultaneously
+- free plan available
+- no credit card required to start
+
+key_features:
+- restream studio (browser-based streaming)
+- unified chat across platforms
+- multistreaming to Twitch, YouTube, Facebook, TikTok, etc.
+- analytics dashboard
+- guest invites
+- scheduled streaming
+
+primary_cta:
+- https://try.restream.io/rwapmhjhzv2z
+
+secondary_cta:
+- https://try.restream.io/studio-PalmariniServices
+
+conversion_notes:
+- emphasize speed ("go live in minutes")
+- emphasize simplicity ("one stream everywhere")
+- emphasize trust ("7M+ creators")
+- minimize friction (no signup barriers before CTA)
+
+tone:
+- direct
+- high-conversion SaaS marketing style
+- clarity over hype
+
+affiliate_disclosure:
+- this page contains affiliate links that may generate commission
+
+seo_keywords:
+- multistreaming
+- live streaming software
+- stream to multiple platforms
+- restream alternative
+- twitch youtube streaming tool
