@@ -1,65 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Page Not Found</title>
+  <meta name="google-site-verification" content="eWVDN3vbam9nnaZQu7wAQKyfmJJdM7zjI80l4DGeUrQ" />
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #e2e8f0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
-      flex-direction: column;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    h1 {
-      font-size: 5rem;
-      margin: 0;
-    }
+<title>Restream — Go Live Everywhere in 60 Seconds</title>
 
-    p {
-      font-size: 1.2rem;
-      opacity: 0.8;
-    }
+<meta name="description" content="Stream to Twitch, YouTube, Facebook, TikTok & 30+ platforms at once. Start free in minutes. No credit card required. Used by 7M+ creators.">
 
-    a {
-      margin-top: 20px;
-      display: inline-block;
-      padding: 10px 20px;
-      background: #3b82f6;
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-    }
+<meta name="keywords" content="restream, multistream, live streaming software, stream to multiple platforms">
 
-    a:hover {
-      background: #2563eb;
-    }
-  </style>
+<meta property="og:title" content="Restream — Multistream Everywhere in 60 Seconds">
+<meta property="og:description" content="Go live everywhere at once. Free plan available. Start streaming in minutes.">
 
-  <!-- Auto redirect after 5 seconds -->
-  <script>
-    setTimeout(() => {
-      window.location.href = "/restream.com/";
-    }, 5000);
-  </script>
+<meta name="robots" content="index, follow">
+
+<link rel="canonical" href="https://try.restream.io/rwapmhjhzv2z">
+
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --rs-red:#FF3B30;
+  --rs-bg:#060608;
+  --rs-card:#13131A;
+  --rs-border:#ffffff14;
+  --rs-text:#E8E6F0;
+  --rs-muted:#9a96ad;
+}
+
+body{
+  background:var(--rs-bg);
+  color:var(--rs-text);
+  font-family:'DM Sans',sans-serif;
+  line-height:1.6;
+}
+
+a{color:inherit;text-decoration:none}
+
+/* NAV */
+nav{
+  position:sticky;
+  top:0;
+  z-index:10;
+  display:flex;
+  justify-content:space-between;
+  padding:16px 5vw;
+  background:rgba(6,6,8,.9);
+  border-bottom:1px solid var(--rs-border);
+  backdrop-filter:blur(10px);
+}
+
+.logo{
+  font-family:'Syne';
+  font-weight:800;
+  color:#fff;
+}
+
+.logo span{color:var(--rs-red)}
+
+.cta-nav{
+  background:var(--rs-red);
+  padding:10px 18px;
+  border-radius:8px;
+  font-size:14px;
+}
+
+/* HERO */
+.hero{
+  text-align:center;
+  padding:90px 5vw 60px;
+}
+
+h1{
+  font-family:'Syne';
+  font-size:clamp(42px,6vw,72px);
+  line-height:1.05;
+  color:#fff;
+  margin-bottom:14px;
+}
+
+h1 em{color:var(--rs-red);font-style:normal}
+
+.sub{
+  max-width:620px;
+  margin:0 auto 26px;
+  color:var(--rs-muted);
+  font-size:18px;
+}
+
+.cta-row{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.btn{
+  padding:16px 28px;
+  border-radius:10px;
+  font-weight:600;
+}
+
+.primary{
+  background:var(--rs-red);
+  color:#fff;
+}
+
+.secondary{
+  border:1px solid var(--rs-border);
+}
+
+.trust{
+  margin-top:18px;
+  font-size:13px;
+  color:var(--rs-muted);
+}
+
+.trust strong{color:#fff}
+
+/* FEATURES */
+.section{
+  padding:70px 5vw;
+  max-width:1100px;
+  margin:auto;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;
+}
+
+.card{
+  background:var(--rs-card);
+  border:1px solid var(--rs-border);
+  padding:22px;
+  border-radius:12px;
+}
+
+/* PRICING */
+.pricing{
+  text-align:center;
+}
+
+.price-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px;
+  margin-top:40px;
+}
+
+.price{
+  background:var(--rs-card);
+  border:1px solid var(--rs-border);
+  padding:26px;
+  border-radius:14px;
+  text-align:left;
+}
+
+.price.featured{
+  border-color:var(--rs-red);
+}
+
+.amount{
+  font-size:42px;
+  font-family:'Syne';
+  color:#fff;
+}
+
+ul{list-style:none;padding:0}
+li{padding:6px 0;color:var(--rs-muted)}
+
+.btn-block{
+  display:block;
+  margin-top:14px;
+  text-align:center;
+  padding:12px;
+  border-radius:8px;
+  background:var(--rs-red);
+}
+
+/* CTA */
+.final-cta{
+  text-align:center;
+  padding:90px 5vw;
+}
+
+footer{
+  text-align:center;
+  padding:40px;
+  border-top:1px solid var(--rs-border);
+  color:var(--rs-muted);
+  font-size:12px;
+}
+</style>
 </head>
 
 <body>
-  <h1>404</h1>
-  <p>Oops! The page you’re looking for doesn’t exist.</p>
 
-  <a href="/restream.com/">Go Home</a>
+<nav>
+  <div class="logo">Re<span>stream</span></div>
+  <a class="cta-nav" href="https://try.restream.io/rwapmhjhzv2z">Start Free</a>
+</nav>
 
-  <p style="margin-top: 15px; font-size: 0.9rem;">
-    Redirecting you back in 5 seconds...
+<section class="hero">
+
+  <h1>Go Live <em>Everywhere</em> in 60 Seconds</h1>
+
+  <p class="sub">
+    Stream once. Reach Twitch, YouTube, Facebook, TikTok & 30+ platforms instantly.
+    No setup. No credit card. Start in minutes.
   </p>
+
+  <div class="cta-row">
+    <a class="btn primary" href="https://try.restream.io/rwapmhjhzv2z">Start Free Now</a>
+    <a class="btn secondary" href="https://try.restream.io/studio-PalmariniServices">Watch Demo</a>
+  </div>
+
+  <div class="trust">
+    <strong>7M+ creators</strong> · 4.9★ rating · Free plan available · Live in minutes
+  </div>
+
+</section>
+
+<section class="section">
+  <div class="grid">
+
+    <div class="card">
+      <h3>One Stream Everywhere</h3>
+      <p>Go live on all platforms at once instantly.</p>
+    </div>
+
+    <div class="card">
+      <h3>Grow Faster</h3>
+      <p>Multiply reach without extra effort or tools.</p>
+    </div>
+
+    <div class="card">
+      <h3>Unified Chat</h3>
+      <p>All messages in one place, no tab switching.</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="section pricing">
+
+  <h2 style="color:#fff;font-family:'Syne'">Start Free. Upgrade Anytime.</h2>
+
+  <div class="price-grid">
+
+    <div class="price">
+      <h3>Free</h3>
+      <div class="amount">$0</div>
+      <ul>
+        <li>2 platforms</li>
+        <li>Basic analytics</li>
+        <li>Studio access</li>
+      </ul>
+      <a class="btn-block" href="https://try.restream.io/rwapmhjhzv2z">Start Free</a>
+    </div>
+
+    <div class="price featured">
+      <h3>Standard (Best Value)</h3>
+      <div class="amount">$16</div>
+      <ul>
+        <li>Unlimited platforms</li>
+        <li>No watermark</li>
+        <li>Full analytics</li>
+      </ul>
+      <a class="btn-block" href="https://try.restream.io/rwapmhjhzv2z">Start Standard</a>
+    </div>
+
+    <div class="price">
+      <h3>Pro</h3>
+      <div class="amount">$41</div>
+      <ul>
+        <li>Team access</li>
+        <li>Priority support</li>
+        <li>Advanced tools</li>
+      </ul>
+      <a class="btn-block" href="https://try.restream.io/rwapmhjhzv2z">Go Pro</a>
+    </div>
+
+  </div>
+</section>
+
+<section class="final-cta">
+
+  <h2 style="color:#fff;font-family:'Syne'">Ready to Go Live Everywhere?</h2>
+
+  <p style="color:#9a96ad;margin-top:12px">
+    Join 7M+ creators streaming across all platforms in minutes.
+  </p>
+
+  <div class="cta-row" style="margin-top:20px">
+    <a class="btn primary" href="https://try.restream.io/rwapmhjhzv2z">Start Free Today</a>
+  </div>
+
+</section>
+
+<footer>
+  © 2026 Restream — All rights reserved
+</footer>
+
 </body>
 </html>
